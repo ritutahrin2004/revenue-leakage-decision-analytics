@@ -1,0 +1,189 @@
+# Staging Layer Design (`stg_*`)
+
+## Purpose
+
+This document describes the **staging layer** of the analytics pipeline.
+
+The staging layer sits between raw ingestion and analytical logic. Its responsibility is to convert raw, messy source data into **clean, typed, and well-grained datasets** that can reliably support baseline metrics and decision analysis.
+
+Raw tables are preserved exactly as ingested. All transformations occur in the staging layer.
+
+---
+
+## Design Principles
+
+The staging layer follows these principles:
+
+- **Raw data is preserved**  
+  No cleaning, casting, or filtering is applied in the raw schema.
+
+- **Validation before casting**  
+  Dates, numerics, and timestamps are validated explicitly before type conversion to avoid silent failures.
+
+- **Deterministic transformations**  
+  All logic is written in SQL and is auditable, repeatable, and idempotent.
+
+- **Minimal responsibility**  
+  The staging layer prepares data; it does not compute KPIs, apply forecasts, or embed business decisions.
+
+Pipeline pattern:raw → staging → analytical views → decision logic
+
+
+---
+
+## Implementation Overview
+
+All staging logic is implemented as standalone SQL scripts located under:sql/staging/
+
+
+Each script:
+- Drops and recreates the staging table
+- Applies explicit validation and casting rules
+- Produces a clean dataset with a stable and well-defined grain
+
+---
+
+## Staging Schema
+
+All staging tables live under:grocery_growth_analytics
+
+
+Naming convention:stg_<entity>
+
+
+---
+
+## Staging Tables
+
+### `stg_orders`
+- **Grain:** one row per order  
+- **SQL:** `sql/staging/stg_orders.sql`
+
+Key responsibilities:
+- Validate and cast order timestamps and monetary fields
+- Deduplicate orders by `order_id`
+- Standardize promised vs actual delivery timestamps
+- Filter invalid header rows and malformed dates
+
+Purpose:
+- Primary source for net revenue baseline
+- Anchor table for delivery and feedback joins
+
+---
+
+### `stg_order_items`
+- **Grain:** one row per order × product  
+- **SQL:** `sql/staging/stg_order_items.sql`
+
+Key responsibilities:
+- Cast quantities and unit prices
+- Deduplicate `(order_id, product_id)` combinations
+- Compute line-level revenue
+
+Purpose:
+- Revenue reconstruction
+- SKU-level demand and basket analysis
+
+---
+
+### `stg_delivery_performance`
+- **Grain:** one row per order  
+- **SQL:** `sql/staging/stg_delivery_performance.sql`
+
+Key responsibilities:
+- Validate and cast promised and actual delivery timestamps
+- Compute delivery delay in minutes
+- Filter malformed header rows and invalid timestamps
+
+Purpose:
+- Delivery reliability measurement
+- Guardrail definition for service risk
+
+---
+
+### `stg_customer_feedback`
+- **Grain:** one row per feedback record  
+- **SQL:** `sql/staging/stg_customer_feedback.sql`
+
+Key responsibilities:
+- Validate and cast feedback timestamps
+- Standardize ratings and sentiment fields
+- Filter invalid date entries
+
+Purpose:
+- Quantify customer pain
+- Link service failures to customer sentiment
+
+---
+
+### `stg_inventory`
+- **Grain:** one row per product per day  
+- **SQL:** `sql/staging/stg_inventory.sql`
+
+Key responsibilities:
+- Unify multiple raw inventory extracts
+- Standardize inventory dates across formats
+- Cast stock movement fields
+- Preserve source metadata for traceability
+
+Purpose:
+- Inventory availability analysis
+- Stock stress and replenishment diagnostics
+
+---
+
+### `stg_marketing_performance`
+- **Grain:** one row per campaign per day  
+- **SQL:** `sql/staging/stg_marketing_performance.sql`
+
+Key responsibilities:
+- Validate and cast campaign dates
+- Standardize spend, revenue, and ROAS metrics
+- Explicit handling of malformed headers and numeric fields
+
+Purpose:
+- Marketing efficiency analysis
+- Revenue leakage evaluation from spend inefficiency
+
+---
+
+## Data Quality Handling
+
+The staging layer explicitly handles common real-world data issues:
+
+- CSV headers ingested as data rows
+- Inconsistent date formats
+- Numeric fields containing symbols or free text
+- Missing or malformed timestamps
+
+Invalid records are filtered during staging rather than silently coerced.
+
+---
+
+## What the Staging Layer Does NOT Do
+
+The staging layer intentionally does **not**:
+- Apply forecasting logic
+- Aggregate to business KPIs
+- Infer causality
+- Optimize decisions
+
+These responsibilities belong to downstream analytical views and decision models.
+
+---
+
+## Status
+
+- Raw → staging layer completed  
+- All core entities staged and validated  
+- Ready for baseline metrics and revenue leakage analysis  
+
+---
+
+## End of Document
+
+
+
+
+
+
