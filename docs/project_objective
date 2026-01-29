@@ -1,0 +1,132 @@
+# Project Objective & Scope
+
+## Project Overview
+
+This project is a **decision-focused analytics case study** built on an online grocery business context.
+
+The goal is not to showcase tools or models, but to demonstrate how integrated transactional, operational, inventory, and marketing data can be used to support **clear business prioritization under constraints**.
+
+The project is designed to mirror how analytics is used in real organizations:  
+to identify problems, quantify impact, evaluate trade-offs, and recommend what to fix first.
+
+---
+
+## Core Decision
+
+**Which operational failure is causing the largest *preventable* net revenue loss, and therefore should be prioritized first?**
+
+Specifically, the project evaluates three competing sources of revenue leakage:
+
+1. **Inventory stockouts**  
+2. **Delivery and fulfillment failures**  
+3. **Marketing inefficiency**
+
+The output of the project is a defensible recommendation on which area to address first, based on impact, risk, and feasibility.
+
+---
+
+## Time Horizon
+
+The analysis focuses on a **short-term planning horizon (~8 weeks)**.
+
+This horizon is intentionally chosen to:
+- Reflect realistic operational decision cycles
+- Capture near-term revenue impact
+- Avoid speculative long-term assumptions
+
+---
+
+## Primary Metric
+
+**Net Revenue**
+
+All scenarios and trade-offs are evaluated relative to their effect on net revenue, not isolated operational metrics.
+
+---
+
+## Trade-offs & Guardrails
+
+The decision is evaluated under explicit constraints:
+
+### Trade-offs
+- **Inventory risk:** stockout frequency and lost sales exposure  
+- **Operational risk:** order errors, delivery delays, and customer complaints  
+
+### Guardrail
+- **Service risk:** the 95th percentile delivery delay must remain within an acceptable threshold derived from historical performance
+
+These constraints prevent recommendations that improve revenue at the expense of customer experience or operational stability.
+
+---
+
+## What This Project Is (and Is Not)
+
+### This project **is**:
+- Decision-oriented rather than model-oriented
+- Grounded in real-world data quality issues
+- Explicit about assumptions and limitations
+- Focused on prioritization, not perfection
+
+### This project **is not**:
+- A forecasting accuracy competition
+- A machine learning showcase
+- A dashboard-only project
+- An academic exercise
+
+---
+
+## Project Structure
+
+The project is organized into clear analytical layers:
+
+1. **Raw ingestion**  
+   Raw source data ingested without modification
+
+2. **Staging layer**  
+   Typed, validated, and well-grained datasets prepared in SQL
+
+3. **Baseline metrics**  
+   Descriptive analysis to establish current performance
+
+4. **Revenue leakage decomposition**  
+   Quantification of preventable revenue loss across competing failure modes
+
+5. **Scenario evaluation**  
+   Comparison of inventory-first, operations-first, and marketing-first strategies
+
+6. **Recommendation**  
+   A clear, constrained decision supported by evidence and risk analysis
+
+---
+
+## Explicitly Out of Scope
+
+To maintain focus and realism, the following are intentionally excluded:
+
+- Long-term customer lifetime value modeling  
+- Individual-level personalization or targeting  
+- Price optimization  
+- Store expansion or geographic growth decisions  
+
+---
+
+## Current Status
+
+- Project framing finalized  
+- Raw data ingested  
+- Staging layer completed  
+- Ready to proceed with baseline metrics and revenue leakage analysis  
+
+---
+
+## Next Steps
+
+1. Publish baseline revenue, delivery reliability, and customer pain metrics  
+2. Quantify revenue leakage for each failure mode  
+3. Evaluate scenarios under defined trade-offs and guardrails  
+4. Produce a final recommendation and decision memo  
+
+---
+
+## End of Document
+
