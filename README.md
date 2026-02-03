@@ -50,6 +50,9 @@ Key layers:
 
 The magnitude gap between operational leakage and inventory risk is large and persistent.
 
+![Revenue leakage comparison](assets/screenshots/revenue_leakage_comparison.png)
+
+
 ---
 
 ## Final Recommendation
