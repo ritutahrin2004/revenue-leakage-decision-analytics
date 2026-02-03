@@ -1,0 +1,76 @@
+# Decision Memo: Revenue Leakage Prioritization
+
+## Decision
+
+Prioritize **delivery and fulfillment operations** as the first area of intervention to reduce preventable net revenue loss.
+
+Inventory improvements should follow as a secondary initiative. Marketing optimization should be deferred until operational reliability improves.
+
+---
+
+## Evidence Summary
+
+Weekly analysis shows a clear and persistent gap between operational leakage and inventory risk exposure.
+
+### Operations (Delivery / Fulfillment)
+- **45%–77% of weekly revenue** is associated with late deliveries
+- Late orders consistently account for the majority of revenue volume
+- High p95 delays indicate a long-tail reliability problem rather than isolated incidents
+
+### Inventory
+- **Average revenue exposure:** ~12%
+- **Maximum observed exposure:** ~25%
+- Several weeks show minimal or zero inventory risk
+
+### Comparison
+Even in weeks with elevated inventory risk, operational leakage remains **2–3× larger** in magnitude.
+
+---
+
+## Trade-offs & Guardrails
+
+### Primary Metric
+- **Net Revenue**
+
+### Trade-offs
+- Operational fixes may require capacity or cost increases
+- Inventory improvements compete for capital and planning effort
+
+### Guardrail
+- **Service quality constraint:**  
+  Interventions must not increase the 95th percentile delivery delay beyond current tolerance thresholds, as customer sentiment degrades in the tail.
+
+---
+
+## Recommendation
+
+Adopt an **operations-first strategy** focused on:
+- Reducing long-tail delivery delays
+- Improving fulfillment reliability
+- Stabilizing order execution consistency
+
+Inventory initiatives should target high-risk SKUs identified through replenishment volatility but should not delay operational fixes.
+
+Marketing efficiency optimization should be addressed only after operational reliability improves, as current leakage is dominated by execution failures rather than demand generation inefficiency.
+
+---
+
+## Next Steps (Next 2–4 Weeks)
+
+1. Identify root causes of long delivery delays (routing, partner capacity, batching)
+2. Set explicit p95 delay targets and monitor weekly
+3. Track post-intervention revenue share from late orders
+4. Begin targeted inventory stabilization for consistently stressed products
+
+---
+
+## Limitations
+
+- Inventory risk is estimated using supply-side proxies due to lack of stock-on-hand data
+- Results represent **revenue exposure**, not guaranteed lost sales
+
+These limitations do not affect the prioritization outcome due to the magnitude gap observed.
+
+---
+
+## End of Memo
