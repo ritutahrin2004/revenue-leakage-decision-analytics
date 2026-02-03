@@ -1,0 +1,64 @@
+# Baseline Findings
+
+This document summarizes baseline performance metrics used to understand the current operating state prior to any intervention.
+
+These findings provide context for the prioritization decision documented in `decision_memo.md`.
+
+---
+
+## Baseline Revenue Performance
+
+**Source:** `v_baseline_weekly_revenue`
+
+Observations:
+- Weekly net revenue is consistently non-trivial, indicating meaningful business scale
+- Revenue fluctuates week to week, suggesting sensitivity to execution quality
+- No prolonged revenue collapse is observed, implying demand exists and is being partially fulfilled
+
+Implication:
+- Revenue leakage is likely driven by **execution failures**, not lack of demand
+
+---
+
+## Baseline Delivery Performance
+
+**Source:** `v_baseline_weekly_delivery`
+
+Observations:
+- Late delivery rates range roughly from **45% to 75%** across weeks
+- Average delay appears moderate, but **p95 delay consistently exceeds acceptable thresholds**
+- Performance indicates a long-tail reliability problem rather than isolated incidents
+
+Implication:
+- Mean-based metrics understate operational risk
+- Customer experience is primarily driven by tail delays, not averages
+
+---
+
+## Baseline Customer Feedback
+
+**Source:** `v_baseline_weekly_feedback`
+
+Observations:
+- Average ratings cluster around **3.3–3.5**
+- Negative sentiment consistently ranges between **~25%–35%**
+- Feedback volume is stable, indicating reliable signal rather than sampling noise
+
+Implication:
+- Customers are tolerating service issues but are not satisfied
+- There is limited buffer for further service degradation
+
+---
+
+## Summary
+
+Baseline metrics indicate:
+- Healthy underlying demand
+- Systematic operational reliability issues
+- Customer sentiment already under pressure
+
+These conditions support prioritizing execution improvements before demand-side optimization.
+
+---
+
+## End of Document
